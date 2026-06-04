@@ -2,7 +2,6 @@
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
 import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
-import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_clickhouse_cloud_suppression.dart';
 
@@ -83,97 +82,134 @@ Future<T> tracedClickhouseCloud<T>({
   final span =
       t.startSpan('clickhouse_cloud $operation', kind: SpanKind.client);
   try {
-    span.setStringAttribute('rpc.system', 'clickhouse');
-    span.setStringAttribute('rpc.method', operation);
-    span.setStringAttribute('db.system', 'clickhouse');
+    span.addAttributes(
+        OTel.attributes([OTel.attributeString('rpc.system', 'clickhouse')]));
+    span.addAttributes(
+        OTel.attributes([OTel.attributeString('rpc.method', operation)]));
+    span.addAttributes(
+        OTel.attributes([OTel.attributeString('db.system', 'clickhouse')]));
     final r = await invoke();
     final res = r.result;
     if (res != null) {
       if (res.organizationId != null) {
-        span.setStringAttribute(
-            'clickhouse.organization.id', res.organizationId!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString(
+              'clickhouse.organization.id', res.organizationId!)
+        ]));
       }
       if (res.serviceId != null) {
-        span.setStringAttribute('clickhouse.service.id', res.serviceId!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('clickhouse.service.id', res.serviceId!)]));
       }
       if (res.serviceName != null) {
-        span.setStringAttribute('clickhouse.service.name', res.serviceName!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('clickhouse.service.name', res.serviceName!)
+        ]));
       }
       if (res.region != null) {
-        span.setStringAttribute('clickhouse.region', res.region!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('clickhouse.region', res.region!)]));
       }
       if (res.cloudProvider != null) {
-        span.setStringAttribute(
-            'clickhouse.cloud_provider', res.cloudProvider!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('clickhouse.cloud_provider', res.cloudProvider!)
+        ]));
       }
       if (res.tier != null) {
-        span.setStringAttribute('clickhouse.tier', res.tier!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('clickhouse.tier', res.tier!)]));
       }
       if (res.endpoint != null) {
-        span.setStringAttribute('clickhouse.endpoint', res.endpoint!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('clickhouse.endpoint', res.endpoint!)]));
       }
       if (res.databaseName != null) {
-        span.setStringAttribute('db.name', res.databaseName!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('db.name', res.databaseName!)]));
       }
       if (res.tableName != null) {
-        span.setStringAttribute('db.sql.table', res.tableName!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('db.sql.table', res.tableName!)]));
       }
       if (res.queryKind != null) {
-        span.setStringAttribute('clickhouse.query.kind', res.queryKind!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('clickhouse.query.kind', res.queryKind!)]));
       }
       if (res.queryId != null) {
-        span.setStringAttribute('clickhouse.query.id', res.queryId!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('clickhouse.query.id', res.queryId!)]));
       }
       if (res.userName != null) {
-        span.setStringAttribute('db.user', res.userName!);
+        span.addAttributes(
+            OTel.attributes([OTel.attributeString('db.user', res.userName!)]));
       }
       if (res.rowsRead != null) {
-        span.setIntAttribute('clickhouse.rows.read', res.rowsRead!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('clickhouse.rows.read', res.rowsRead!)]));
       }
       if (res.rowsReturned != null) {
-        span.setIntAttribute('clickhouse.rows.returned', res.rowsReturned!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt('clickhouse.rows.returned', res.rowsReturned!)
+        ]));
       }
       if (res.rowsWritten != null) {
-        span.setIntAttribute('clickhouse.rows.written', res.rowsWritten!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('clickhouse.rows.written', res.rowsWritten!)]));
       }
       if (res.bytesRead != null) {
-        span.setIntAttribute('clickhouse.bytes.read', res.bytesRead!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('clickhouse.bytes.read', res.bytesRead!)]));
       }
       if (res.bytesWritten != null) {
-        span.setIntAttribute('clickhouse.bytes.written', res.bytesWritten!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt('clickhouse.bytes.written', res.bytesWritten!)
+        ]));
       }
       if (res.queryDurationMs != null) {
-        span.setIntAttribute(
-            'clickhouse.query.duration_ms', res.queryDurationMs!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt(
+              'clickhouse.query.duration_ms', res.queryDurationMs!)
+        ]));
       }
       if (res.memoryUsageBytes != null) {
-        span.setIntAttribute(
-            'clickhouse.memory.usage_bytes', res.memoryUsageBytes!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt(
+              'clickhouse.memory.usage_bytes', res.memoryUsageBytes!)
+        ]));
       }
       if (res.resultRows != null) {
-        span.setIntAttribute('clickhouse.result.rows', res.resultRows!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('clickhouse.result.rows', res.resultRows!)]));
       }
       if (res.resultBytes != null) {
-        span.setIntAttribute('clickhouse.result.bytes', res.resultBytes!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('clickhouse.result.bytes', res.resultBytes!)]));
       }
       if (res.compressedBytes != null) {
-        span.setIntAttribute(
-            'clickhouse.compressed_bytes', res.compressedBytes!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt('clickhouse.compressed_bytes', res.compressedBytes!)
+        ]));
       }
       if (res.replicasUsed != null) {
-        span.setIntAttribute('clickhouse.replicas.used', res.replicasUsed!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt('clickhouse.replicas.used', res.replicasUsed!)
+        ]));
       }
       if (res.statusCode != null) {
-        span.setIntAttribute('http.response.status_code', res.statusCode!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('http.response.status_code', res.statusCode!)]));
       }
       if (res.errorCode != null) {
-        span.setStringAttribute('clickhouse.error.code', res.errorCode!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('clickhouse.error.code', res.errorCode!)]));
       }
       final fail = res.errorCode != null ||
           (res.statusCode != null && res.statusCode! >= 400);
       if (fail) {
-        span.setStringAttribute(ErrorResource.errorType.key,
-            res.errorCode ?? 'clickhouse_cloud.error');
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString(ErrorResource.errorType.key,
+              res.errorCode ?? 'clickhouse_cloud.error')
+        ]));
         span.setStatus(SpanStatusCode.Error, res.errorMessage);
       }
     }
